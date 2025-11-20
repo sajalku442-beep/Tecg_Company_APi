@@ -6,7 +6,7 @@ import {
   updateInsight,
   deleteInsight,
 } from "../controllers/insight.js";
-import { authenticate } from "../Middlewares/auth.js";
+import { authenticate } from "../middlewares/auth.js";
 import { singleupload } from "../middlewares/multer.js";
 
 const router = express.Router();
