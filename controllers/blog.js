@@ -1,5 +1,5 @@
 import express from "express";
-import { Blog } from "../Models/blog.js";
+import { Blog } from "../models/blog.js";
 import getDataUri from "../utils/dataurl.js";
 import cloudinary from "../utils/cloudinary.js";
 
