@@ -71,9 +71,11 @@ export const getBlogById = async (req, res) => {
 };
 export const updateBlogById = async (req, res) => {
   try {
+    console.log(req.body);
+
     const { id } = req.params;
-    const { tag, title, content, category } = req.body;
-    if (!tag || !title || !content || !category) {
+    const { tag, title, content } = req.body;
+    if (!tag || !title || !content) {
       return res.json({ message: "All fields are required", success: false });
     }
     const blog1 = await Blog.findById(id);
@@ -99,7 +101,7 @@ export const updateBlogById = async (req, res) => {
         tag,
         title,
         content,
-        category,
+
         image: imageUploadResponse?.secure_url || newImage,
       },
       { new: true }
