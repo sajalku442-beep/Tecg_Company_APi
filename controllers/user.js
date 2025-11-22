@@ -88,14 +88,32 @@ export const getUserData = async (req, res) => {
 };
 export const updateUserData = async (req, res) => {
   try {
+    console.log(req.body);
+
     const { username, email, password } = req.body;
     let user = req.user;
-    const hasspassword = await bcrypt.hash(password, 10);
+    let hasspassword;
+    if (password) {
+      hasspassword = await bcrypt.hash(password, 10);
+    }
+
+    const file = req.file;
+    let imageCloudresponse;
+    if (file) {
+      const fileUrl = getDataUri(file);
+      imageCloudresponse = await cloudinary.uploader.upload(fileUrl.content);
+      console.log(imageCloudresponse);
+
+      if (!imageCloudresponse) {
+        return res.json({ message: "Image upload failed", success: false });
+      }
+    }
     user = await User.findByIdAndUpdate(
       req.user._id,
       {
         username: username || user.username,
         email: email || user.email,
+        image: imageCloudresponse?.secure_url || "",
         password: hasspassword || user.password,
       },
       { new: true }
@@ -139,10 +157,7 @@ export const getallusers = async (req, res) => {
 };
 export const logout = async (req, res) => {
   try {
-    
-    
-  } catch (error) {console.log(error);
-  
-    
+  } catch (error) {
+    console.log(error);
   }
-}
+};

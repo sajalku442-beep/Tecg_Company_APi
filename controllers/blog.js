@@ -5,8 +5,8 @@ import cloudinary from "../utils/cloudinary.js";
 
 export const postblog = async (req, res) => {
   try {
-    const { tag, title, content } = req.body;
-    if (!tag || !title || !content) {
+    const { tag, title, content, category } = req.body;
+    if (!tag || !title || !content || !category) {
       return res.json({ message: "All fields are required.", success: false });
     }
 
@@ -27,6 +27,7 @@ export const postblog = async (req, res) => {
       tag: tag,
       title: title,
       content: content,
+      category: category,
       image: imageUploadResponse?.secure_url || "",
       user: user._id,
     });
@@ -71,8 +72,8 @@ export const getBlogById = async (req, res) => {
 export const updateBlogById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { tag, title, content } = req.body;
-    if (!tag || !title || !content) {
+    const { tag, title, content, category } = req.body;
+    if (!tag || !title || !content || !category) {
       return res.json({ message: "All fields are required", success: false });
     }
     const blog1 = await Blog.findById(id);
@@ -98,6 +99,7 @@ export const updateBlogById = async (req, res) => {
         tag,
         title,
         content,
+        category,
         image: imageUploadResponse?.secure_url || newImage,
       },
       { new: true }

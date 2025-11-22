@@ -6,7 +6,7 @@ export const createInsight = async (req, res) => {
   try {
     console.log(req.body);
 
-    const { title,category, summary, content } = req.body;
+    const { title, category, summary, content } = req.body;
 
     if (!title || !summary || !content) {
       return res.json({
@@ -63,12 +63,13 @@ export const getAllInsights = async (req, res) => {
 };
 export const getInsightById = async (req, res) => {
   try {
-    const id = req.params.id;
+    const { id } = req.params;
 
     const insight = await Insight.findById(id);
     if (!insight) {
       return res.json({ success: false, message: "Insight not found" });
     }
+    console.log(insight);
 
     return res.json({
       message: "Insight fetched successfully",
@@ -83,7 +84,7 @@ export const getInsightById = async (req, res) => {
 export const updateInsight = async (req, res) => {
   try {
     const id = req.params.id;
-    const { title,category, summary, content } = req.body;
+    const { title, category, summary, content } = req.body;
 
     const insight = await Insight.findById(id);
     if (!insight) {

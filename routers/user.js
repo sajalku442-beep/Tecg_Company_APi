@@ -15,7 +15,7 @@ const router = express.Router();
 router.route("/register").post(singleupload, register);
 router.route("/login").post(login);
 router.route("/profile").get(authenticate, getUserData);
-router.route("/update").put(authenticate, updateUserData);
+router.route("/update").put(authenticate, singleupload, updateUserData);
 router.route("/all").get(getallusers);
 router.route("/delete/:id").delete(deleteUserById);
 
